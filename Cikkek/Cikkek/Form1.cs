@@ -15,7 +15,7 @@ namespace Cikkek
     public partial class Form1 : Form
     {
         public BindingList<Item> _items = new BindingList<Item>();
-        public BindingList<Item> _searchedItems;
+        public BindingList<Item> _searchedItems = new BindingList<Item>();
         private bool isSaved;
         private bool Cancellation = false;
 
@@ -65,8 +65,6 @@ namespace Cikkek
                 using (OpenFileDialog load = new OpenFileDialog())
                 {
                     load.Filter = "Minden fájl|*.*|csv fájlok|*.csv";
-                    _items = new BindingList<Item>();
-                    ItemBindingSource.DataSource = _items;
                     ItemBindingSource.CancelEdit();
                     load.CheckFileExists = true;
                     var res = load.ShowDialog();
@@ -77,15 +75,15 @@ namespace Cikkek
                     }
                 }
                 isSaved = true;
-
+                
             }
-
-      }
+            search(SearchBox.Text);
+        }
 
         
         private void Form1_Load(object sender, EventArgs e)
         {
-            ItemBindingSource.DataSource = _items;
+            ItemBindingSource.DataSource = _searchedItems;
             disableCancel();
         }
 
@@ -97,9 +95,16 @@ namespace Cikkek
 
         private void search(string txt)
         {
+            ItemBindingSource.SuspendBinding();
+            _searchedItems.Clear();
             if (txt.Equals(""))
-                ItemBindingSource.DataSource = _items;
-            _searchedItems = new BindingList<Item>();
+            {
+                
+                foreach(Item i in _items)
+                    _searchedItems.Add(i);
+                
+            }
+            else
             for (int i = 0; i < _items.Count; i++)
             {
                 if (_items[i].Cikknev.ToString().ToLower().Contains(txt.ToLower()) ||
@@ -111,7 +116,9 @@ namespace Cikkek
                 }
 
             }
-            ItemBindingSource.DataSource = _searchedItems;
+            Debug.WriteLine("_items:{0} _searchedItems:{1}",_items.Count,_searchedItems.Count);
+            ItemBindingSource.ResumeBinding();
+            
         }
 
         private void NewButton_Click(object sender, EventArgs e)
@@ -128,30 +135,12 @@ namespace Cikkek
 
 
             }
+            search(SearchBox.Text);
         }
 
         private void EditButton_Click(object sender, EventArgs e)
         {
-            Item itemToEdit=new Item();
-            int itemIndex=-1;
-            if (dataGridView1.SelectedRows.Count > 0)
-                itemIndex = dataGridView1.SelectedRows[0].Index;
-            else if (dataGridView1.SelectedCells.Count > 0)
-            {
-                dataGridView1.Rows[dataGridView1.SelectedCells[0].RowIndex].Selected = true;
-                itemIndex = dataGridView1.SelectedRows[0].Index;
-            }
-            else
-            {
-                MessageBox.Show("Nincs elem kiválasztva!", "Hiba!",MessageBoxButtons.OK);
-                return;
-            }
-
-            itemToEdit.Cikknev = _items[itemIndex].Cikknev;
-            itemToEdit.Cikkszam = _items[itemIndex].Cikkszam;
-            itemToEdit.Vonalkod = _items[itemIndex].Vonalkod;
-            itemToEdit.MennyisegiEgyseg = _items[itemIndex].MennyisegiEgyseg;
-
+            Item itemToEdit= (Item)ItemBindingSource.Current;
 
             using (Form2 form = new Form2())
             {
@@ -160,7 +149,7 @@ namespace Cikkek
                 var res=form.ShowDialog();
                 if (res == DialogResult.OK)
                 {
-                    _items[itemIndex] = form.ItemToReturn;
+                    itemToEdit = form.ItemToReturn;
                     isSaved = false;
                 }
             }
@@ -175,7 +164,7 @@ namespace Cikkek
             if(canDo)
             {
                 _items = new BindingList<Item>();
-                ItemBindingSource.DataSource = _items;
+                search("");
                 isSaved = true;
             }
         }
@@ -228,8 +217,8 @@ namespace Cikkek
                         Invoke(new Action(() =>
                         {
                             _items.Add(reader.GetRecord<Item>());
-                            
-                            
+                            _searchedItems.Add(reader.GetRecord<Item>());
+
                         }));
                         readSoFar++;
                         backgroundLoader.ReportProgress((int)Math.Round(((double)readSoFar * 100 )/ rowCount));
@@ -238,6 +227,8 @@ namespace Cikkek
                 }
 
                 }
+            
+            
                 
         }
 
