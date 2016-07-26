@@ -198,12 +198,30 @@ namespace Quantum_Commander
 
         private void currentDirTabTwoTextBox_KeyDown(object sender, KeyEventArgs e)
         {
-            
+            Debug.WriteLine("currentDirTabOneTextBox_KeyDown" + e.KeyValue);
+            if (e.KeyValue.Equals(13))
+                try
+                {
+                    load(currentDirTabTwoTextBox.Text, 1);
+                }
+                catch (DirectoryNotFoundException exception)
+                {
+                    MessageBox.Show("Az útvonal nem található!");
+                }
         }
 
         private void currentDirTabOneTextBox_KeyDown(object sender, KeyEventArgs e)
         {
-
+            Debug.WriteLine("currentDirTabOneTextBox_KeyDown"+e.KeyValue+" "+ ConsoleKey.Enter);
+            if (e.KeyValue.Equals(13))
+                try
+                {
+                    load(currentDirTabOneTextBox.Text, 0);
+                }
+                catch (DirectoryNotFoundException exception)
+                {
+                    MessageBox.Show("Az útvonal nem található!");
+                }
         }
     }
 }
