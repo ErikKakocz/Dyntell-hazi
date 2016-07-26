@@ -30,10 +30,12 @@
         {
             this.components = new System.ComponentModel.Container();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.dataGridView2 = new System.Windows.Forms.DataGridView();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.tabOneBinding = new System.Windows.Forms.BindingSource(this.components);
+            this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.tabTwoBinding = new System.Windows.Forms.BindingSource(this.components);
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.currentDirTabOneTextBox = new System.Windows.Forms.TextBox();
+            this.currentDirTabTwoTextBox = new System.Windows.Forms.TextBox();
             this.elementNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.extensionDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.modificationDateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -45,8 +47,8 @@
             this.sizeDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.fileSystemElementBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tabOneBinding)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tabTwoBinding)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemElementBindingSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemElementBindingSource)).BeginInit();
@@ -56,6 +58,7 @@
             // 
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.AllowUserToOrderColumns = true;
             this.dataGridView1.AutoGenerateColumns = false;
             this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dataGridView1.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
@@ -66,15 +69,22 @@
             this.modificationDateDataGridViewTextBoxColumn1,
             this.sizeDataGridViewTextBoxColumn1});
             this.dataGridView1.DataSource = this.tabOneBinding;
-            this.dataGridView1.Location = new System.Drawing.Point(0, 29);
+            this.dataGridView1.Location = new System.Drawing.Point(0, 51);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.Size = new System.Drawing.Size(342, 273);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentDoubleClick);
             // 
+            // tabOneBinding
+            // 
+            this.tabOneBinding.DataSource = this.fileSystemElementBindingSource;
+            // 
             // dataGridView2
             // 
+            this.dataGridView2.AllowUserToAddRows = false;
+            this.dataGridView2.AllowUserToDeleteRows = false;
+            this.dataGridView2.AllowUserToOrderColumns = true;
             this.dataGridView2.AutoGenerateColumns = false;
             this.dataGridView2.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dataGridView2.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
@@ -85,10 +95,14 @@
             this.modificationDateDataGridViewTextBoxColumn,
             this.sizeDataGridViewTextBoxColumn});
             this.dataGridView2.DataSource = this.tabTwoBinding;
-            this.dataGridView2.Location = new System.Drawing.Point(348, 29);
+            this.dataGridView2.Location = new System.Drawing.Point(348, 51);
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.Size = new System.Drawing.Size(339, 273);
             this.dataGridView2.TabIndex = 1;
+            // 
+            // tabTwoBinding
+            // 
+            this.tabTwoBinding.DataSource = this.fileSystemElementBindingSource1;
             // 
             // menuStrip1
             // 
@@ -98,13 +112,19 @@
             this.menuStrip1.TabIndex = 2;
             this.menuStrip1.Text = "menuStrip1";
             // 
-            // tabOneBinding
+            // currentDirTabOneTextBox
             // 
-            this.tabOneBinding.DataSource = this.fileSystemElementBindingSource;
+            this.currentDirTabOneTextBox.Location = new System.Drawing.Point(0, 28);
+            this.currentDirTabOneTextBox.Name = "currentDirTabOneTextBox";
+            this.currentDirTabOneTextBox.Size = new System.Drawing.Size(342, 20);
+            this.currentDirTabOneTextBox.TabIndex = 3;
             // 
-            // tabTwoBinding
+            // currentDirTabTwoTextBox
             // 
-            this.tabTwoBinding.DataSource = this.fileSystemElementBindingSource1;
+            this.currentDirTabTwoTextBox.Location = new System.Drawing.Point(348, 27);
+            this.currentDirTabTwoTextBox.Name = "currentDirTabTwoTextBox";
+            this.currentDirTabTwoTextBox.Size = new System.Drawing.Size(339, 20);
+            this.currentDirTabTwoTextBox.TabIndex = 4;
             // 
             // elementNameDataGridViewTextBoxColumn
             // 
@@ -171,6 +191,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(687, 380);
+            this.Controls.Add(this.currentDirTabTwoTextBox);
+            this.Controls.Add(this.currentDirTabOneTextBox);
             this.Controls.Add(this.dataGridView2);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.menuStrip1);
@@ -179,8 +201,8 @@
             this.Text = "Quantum Commander";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tabOneBinding)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tabTwoBinding)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemElementBindingSource1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemElementBindingSource)).EndInit();
@@ -206,6 +228,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn extensionDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn modificationDateDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn sizeDataGridViewTextBoxColumn;
+        private System.Windows.Forms.TextBox currentDirTabOneTextBox;
+        private System.Windows.Forms.TextBox currentDirTabTwoTextBox;
     }
 }
 
