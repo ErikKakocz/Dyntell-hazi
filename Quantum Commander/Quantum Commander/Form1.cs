@@ -136,17 +136,23 @@ namespace Quantum_Commander
             load();
         }
 
-        private void dataGridView1_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+        private void setDirTextBoxes()
         {
-            
+            currentDirTabOneTextBox.Text = currentDirTabOne;
+            currentDirTabTwoTextBox.Text = currentDirTabTwo;
+        }
+
+        private void dataGridView1_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
             if (dataGridView1.CurrentRow.Cells[0].Value.Equals(".."))
             {
                 Debug.WriteLine("HereWeAre: " + dataGridView1.CurrentRow.Cells[0].Value);
-                currentDirTabOne = currentDirTabOne.Substring(0, currentDirTabOne.LastIndexOf("\\"));
-                if (currentDirTabOne.Equals("C:"))
-                    currentDirTabOne = currentDirTabOne + '\\';
-                Debug.WriteLine("currentdir: "+currentDirTabOne);
-                
+                if (_roots.Contains(currentDirTabOne.Substring(0, currentDirTabOne.LastIndexOf("\\") + 1)))
+                    currentDirTabOne = currentDirTabOne.Substring(0, currentDirTabOne.LastIndexOf("\\") + 1);
+                else
+                    currentDirTabOne = currentDirTabOne.Substring(0, currentDirTabOne.LastIndexOf("\\"));
+                Debug.WriteLine("currentdir: " + currentDirTabOne);
+
                 load(currentDirTabOne, 0);
             }
             else if (dataGridView1.CurrentRow.Cells[1].Value.Equals("DIR"))
@@ -157,18 +163,47 @@ namespace Quantum_Commander
                 else
                     currentDirTabOne = currentDirTabOne + '\\' + (String)dataGridView1.CurrentRow.Cells[0].Value;
                 Debug.WriteLine("currentdir: " + currentDirTabOne);
-                
+
                 load(currentDirTabOne, 0);
 
             }
-
-                
         }
 
-        private void setDirTextBoxes()
+        private void dataGridView2_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            currentDirTabOneTextBox.Text = currentDirTabOne;
-            currentDirTabTwoTextBox.Text = currentDirTabTwo;
+            if (dataGridView2.CurrentRow.Cells[0].Value.Equals(".."))
+            {
+                Debug.WriteLine("HereWeAre: " + dataGridView2.CurrentRow.Cells[0].Value);
+                if (_roots.Contains(currentDirTabTwo.Substring(0, currentDirTabTwo.LastIndexOf("\\") + 1)))
+                    currentDirTabTwo = currentDirTabTwo.Substring(0, currentDirTabTwo.LastIndexOf("\\") + 1);
+                else
+                    currentDirTabTwo = currentDirTabTwo.Substring(0, currentDirTabTwo.LastIndexOf("\\"));
+                Debug.WriteLine("currentdir: " + currentDirTabTwo);
+
+                load(currentDirTabTwo, 1);
+            }
+            else if (dataGridView2.CurrentRow.Cells[1].Value.Equals("DIR"))
+            {
+                Debug.WriteLine("HereWeAre: " + dataGridView2.CurrentRow.Cells[0].Value);
+                if (isRootDir(currentDirTabTwo))
+                    currentDirTabTwo = currentDirTabTwo + (String)dataGridView2.CurrentRow.Cells[0].Value;
+                else
+                    currentDirTabTwo = currentDirTabTwo + '\\' + (String)dataGridView2.CurrentRow.Cells[0].Value;
+                Debug.WriteLine("currentdir: " + currentDirTabTwo);
+
+                load(currentDirTabTwo, 1);
+
+            }
+        }
+
+        private void currentDirTabTwoTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            
+        }
+
+        private void currentDirTabOneTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+
         }
     }
 }

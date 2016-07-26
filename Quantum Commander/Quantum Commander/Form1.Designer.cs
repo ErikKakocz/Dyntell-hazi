@@ -74,7 +74,7 @@
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.Size = new System.Drawing.Size(342, 273);
             this.dataGridView1.TabIndex = 0;
-            this.dataGridView1.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentDoubleClick);
+            this.dataGridView1.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_CellMouseClick);
             // 
             // tabOneBinding
             // 
@@ -99,6 +99,7 @@
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.Size = new System.Drawing.Size(339, 273);
             this.dataGridView2.TabIndex = 1;
+            this.dataGridView2.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView2_CellDoubleClick);
             // 
             // tabTwoBinding
             // 
@@ -118,6 +119,7 @@
             this.currentDirTabOneTextBox.Name = "currentDirTabOneTextBox";
             this.currentDirTabOneTextBox.Size = new System.Drawing.Size(342, 20);
             this.currentDirTabOneTextBox.TabIndex = 3;
+            this.currentDirTabOneTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.currentDirTabOneTextBox_KeyDown);
             // 
             // currentDirTabTwoTextBox
             // 
@@ -125,6 +127,7 @@
             this.currentDirTabTwoTextBox.Name = "currentDirTabTwoTextBox";
             this.currentDirTabTwoTextBox.Size = new System.Drawing.Size(339, 20);
             this.currentDirTabTwoTextBox.TabIndex = 4;
+            this.currentDirTabTwoTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.currentDirTabTwoTextBox_KeyDown);
             // 
             // elementNameDataGridViewTextBoxColumn
             // 
